@@ -1,6 +1,6 @@
 {
 
-  "description":"Some demo made with Inter"
+  "description":"Some demo made with Inter",
   "homepage":"http://interjs.epizy.com/demo",
   "dependencies":{
     "inter":^1.1.0,
