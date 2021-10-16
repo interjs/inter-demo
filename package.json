@@ -1,13 +1,14 @@
 {
 
-  "home":"http://interjs.epizy.com/demo",
+  "description":"Some demo made with Inter"
+  "homepage":"http://interjs.epizy.com/demo",
   "dependencies":{
-    "inter":1.1
-    "interfy":1.0
+    "inter":^1.1.0,
+    "interfy":^1.0.0
     
   },
   "devDependencies":{
-  "node":^14.18.0
+  "nodejs":^14.18.0
   },
   
 }
