@@ -74,11 +74,6 @@ routeTo(`/search/${value}`);
 
 }
 
-function routeTo(path){
-
-    url.setPath(path);
-
-}
 
 // App routes.
 
