@@ -1,6 +1,6 @@
 # inter-demo
 
-In this repository you will find some demo made with [Inter](https://github.com/DenisPower1/inter), either by  Inter core team or by the community.
+In this repository you will find some demos made with [Inter](https://github.com/DenisPower1/inter), either by  Inter core team or by the community.
 
 ## Contributing
 
