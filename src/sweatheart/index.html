@@ -9,6 +9,41 @@
         <script src="https://cdn.jsdelivr.net/gh/DenisPower1/inter@1.2.2/inter.js"></script>
     </head>
     <body>
+        
+          <style>
+
+.loader{
+
+    position: fixed;
+    background-color: white;
+    z-index: 9949494;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+
+        </style>
+        <script>
+
+
+            whileLoading({
+                elements:[{
+                    tag:"div", attrs:{
+                        class:"loader"
+                    }, children:[{
+                        tag:"img", attrs:{
+                            src:"images/loader.gif",
+                            title:"A app está carregando..."
+                        }
+                    }]
+                }]
+            })
+        </script>
         <div id="body">
             <div class="none" id="cover"></div>
             <header>
