@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="utf-8">
+        <title>SweatHart</title>
+        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="all.css">
+        <script src="/scripts/all.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/DenisPower1/inter@1.2.2/inter.js"></script>
+    </head>
+    <body>
+        <div id="body">
+            <div class="none" id="cover"></div>
+            <header>
+                <nav>
+                    <a href="#" setPath="/"><i class="fas fa-home"></i></a>
+                    <a href="#" setPath="/interesse" ><i class="fas fa-comment"></i></a>
+                    <a href="#" setPath="/relacoes">More</a>
+    
+                </nav>
+                <div>
+                    <input placeholder="Pesquisar" oninput="search(this.value)" id="searchInput">
+                </div>
+            </header>
+        <div class="main" id="app" _istrue="app">
+            
+   <div class="none" id="report">
+       <h3>Por que denuncias o comentário de { autor }? </h3>
+       <div>
+           <button onclick="report()">É racista</button>
+           <button onclick="report()">É ofensivo</button>
+           <button onclick="report()">É abusivo</button>
+           <button onclick="report()">É agrecivo</button>
+       </div>
+       <section class="space"></section>
+   </div>
+            <div  id="cover"></div>
+
+            <div _istrue="chat">
+
+
+                <div id="interest">
+                    
+                </div>
+                
+
+            </div>
+
+            <div _istrue="home">
+                <div class="more">
+                    <h2>Encontre a tua cara metade</h2>
+                    <div id="g">
+                     
+                        <button {...changegender}>Ver { outroGenero }</button>
+                    </div>
+
+                    <div id="morePosts"></div>
+<div class="space"></div>
+                </div>
+            </div>
+            <div _istrue="relation">
+             <h2>Relacionamentos</h2>
+                <div id="relationList" class="more"></div>
+
+            </div>
+            <div _istrue="comment">
+                <div class="more" id="comment">
+                    <div>
+                        <img src={posterImg} class="posterImg">
+                        <div class="postBox">
+                            <h3>{ posterName }</h3>
+                            <div>
+                                <p>{ content }</p>
+                            </div>
+                            
+                        </div>
+                        <div class="border"></div>
+                        <div class="wcBox">
+                            
+                            <input type="text" placeholder="Escreva o comentário" id="comm">
+                            <button onclick="addComment()">Comentar</button>
+                        </div>
+                        <div>
+                            <div class="top">
+                            <hr>
+                            <div class="flex">
+                                <div>
+                            <p class="left">Comentários: { length }</p>
+                             <span class="left">Interessados: { interested }</span>
+                                </div>
+                                <div>
+                                    <button class="ibt" onclick="toggleInterest()">{ toggle }</button>
+                                </div>
+                            </div>
+                            
+                            <hr>
+                            </div>
+                             <div id="commentList"></div>
+                            <div class="space"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div _istrue="search">
+
+                <div id="search" class="more">
+               <h3 class="l">
+                   Pesquisando por : { search }<br>
+                   Resultados : { result}
+               </h3>
+               
+
+               <div id="result"></div>
+
+                </div>
+
+            </div>
+            
+        
+                </div>
+           
+        </div>
+                <div class="space"></div>
+            </div>
+        </div>
+        <script src="/scripts/app.js"></script>
+     <script src="/scripts/router.js"></script>
+    </body>
+</html>
