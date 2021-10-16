@@ -1,13 +1,13 @@
 {
 
-"home":"http://interjs.epizy.com/demo/sweatheart",
+"homepage":"http://interjs.epizy.com/demo/sweatheart",
 "devDependencies":{
-"node":^14.18.0
+"node":"^14.18.0"
 },
 
 "dependencies":{
 
-"inter":^1.2.2
+"inter":"^1.2.2"
 
 }
 
