@@ -4,7 +4,7 @@ In this repository you will find out some demo made with Inter, either by  Inter
 
 ## Contributing
 
-It's very simple to add a demo made by you, just clone this repository add your app code in the **/search** directory.
+It's very simple to add a demo made by you, just clone this repository add your app code in the **/src** directory.
 
 #### Exemple
 
