@@ -1,0 +1,14 @@
+{
+
+"home":"http://interjs.epizy.com/demo/sweatheart",
+"devDependencies":{
+"node":^14.18.0
+},
+
+"dependencies":{
+
+"inter":^1.2.2
+
+}
+
+}
