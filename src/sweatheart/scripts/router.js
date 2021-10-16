@@ -7,7 +7,7 @@
  * 
  */
 
- // Used change the main containers.
+ // Used to change the main containers.
  // home, interest and relation.
 
 function change(name,info){
