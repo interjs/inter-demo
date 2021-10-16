@@ -7,7 +7,7 @@
  */
 
  // Some functions used in the app code base.
- // This function must be available globally.
+ // These function must be available globally.
 
  function assign(target,source){
 
@@ -99,40 +99,6 @@ const r={
 }
 
 
-event.listen("showReportDetail", (userName)=>{
-
-
-event.removeListener("showReportDetail")
-
-    toHTML({
-        in:"report",
-        data:{
-            autor:userName,
-        },
-        react:"rep"
-    })
-
-})
-
-function report(){
-    document.getElementById("cover").removeAttribute("class");
-    document.getElementById("report").setAttribute("class","none");
-    
-    if(storage.has("reportedComment")){
-    storage.get("reportedComment", (r)=>{
-
-       
-
-        r.reported=true;
-
-    })
-
-}
-
-}
-
-
-
 
  (function(){
 
@@ -142,7 +108,7 @@ function report(){
 
 
         // This event is used to register autor reference
-        // in report div, must be fire only once.
+        // in report div, must be fired only once.
         // And it's reactor must be public, it(the reactor) will be used
         // in others parts of the app.
 
