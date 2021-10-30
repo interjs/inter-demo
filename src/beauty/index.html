@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="utf-8">
+        <title>Inter demo</title>
+        <script src="scripts/inter.js"></script>
+        <script src="scripts/all.js"></script>
+        <link rel="stylesheet" href="styles/index.css">
+        <link rel="stylesheet" href="styles/all.css">
+        <link rel="shortcut icon" href="/foto/Inter.png">
+        
+    </head>
+    <body>
+        <aside>
+            <nav id="nav">
+                <a {...pl}>
+                    <i class="fas fa-city"></i>
+                </a>
+                <a {...an}>
+                    <i class="fas fa-dragon"></i>
+                </a>
+                <a href="">
+                    <i class="fab fa-github"></i>
+                </a>
+            </nav>
+        </aside>
+        <section class="main" id="main">
+            
+                
+            <div>
+               
+                <div id="feed"></div>
+                <div class="space"></div>
+
+            </div>
+       
+        </section>
+    </body>
+    <script>
+
+ 
+          toATTR({
+              in:"nav",
+              
+              data:{
+                  pl:{
+                      class:null,
+                       title:"Cidades",
+                      onclick(){
+
+                   
+                        window.scrollTo(0,0);
+                      url.setPath("/");  
+
+                      }
+                  },
+                  an:{
+                      class:null,
+                       title:"Animais",
+                      onclick(){
+                        window.scrollTo(0,0);
+                        url.setPath("/animais");
+
+                      }
+                  }
+              }
+          })
+
+            //Cities' images.
+
+          const places=[
+              {
+                  image:"f1.jpg", reactions:{
+                      likes:433, 
+                      
+                  }
+              },
+              {
+                  image:"f2.jpg", reactions:{
+                      likes:2340, 
+                      
+                  }
+              },
+              {
+                  image:"f3.jpg", reactions:{
+                      likes:1335, 
+                      
+                  }
+              },
+              {
+                  image:"f4.jpg", reactions:{
+                      likes:5643, 
+                      
+                  }
+              },
+              {
+                  image:"f5.jpg", reactions:{
+                      likes:330,
+                      
+                  }
+              },
+              {
+                  image:"f6.jpg", reactions:{
+                      likes:9938,
+                      
+                  }
+              },
+
+              {
+                  image:"f7.jpg", reactions:{
+                      likes:112, 
+                      
+                  }
+              },
+
+              {
+                  image:"f8.jpg", reactions:{
+                      likes:123, 
+                      
+                  }
+              },
+              {
+                  image:"f9.jpg", reactions:{
+                      likes:743, 
+                      
+                  }
+              },
+              {
+                  image:"f10.jpg", reactions:{
+                      likes:389,
+                      
+                  }
+              },
+              {
+                  image:"f11.jpg", reactions:{
+                      likes:990, 
+                      
+                  }
+              },
+              {
+                  image:"f12.jpg", reactions:{
+                      likes:736,
+                      
+                  }
+              },
+              {
+                  image:"f13.jpg", reactions:{
+                      likes:123, 
+                      
+                  }
+              },
+              {
+                  image:"f14.jpg", reactions:{
+                      likes:2223, 
+                      
+                  }
+              },
+              {
+                  image:"f15.jpg", reactions:{
+                      likes:483, 
+                      
+                  }
+              },
+              {
+                  image:"f16.jpg", reactions:{
+                      likes:682, 
+                      
+                  }
+              },
+              {
+                  image:"f17.jpg", reactions:{
+                      likes:102,
+                      
+                  }
+              },
+              {
+                  image:"f18.jpg", reactions:{
+                      likes:184, 
+                      
+                  }
+              },
+              
+
+          ]
+
+        // Animals' images.
+
+          const animals=[
+            {
+                  image:"a1.jpg", reactions:{
+                      likes:430, 
+                      
+                  }
+              },
+              {
+                  image:"a2.jpg", reactions:{
+                      likes:5432,
+                      
+                  }
+              },
+              {
+                  image:"a3.jpg", reactions:{
+                      likes:100030, 
+                      
+                  }
+              },
+              {
+                  image:"a4.jpg", reactions:{
+                      likes:993,
+                      
+                  }
+              },
+              {
+                  image:"a5.jpg", reactions:{
+                      likes:786, 
+                      
+                  }
+              },
+              {
+                  image:"a6.jpg", reactions:{
+                      likes:1003, 
+                      
+                  }
+              },
+              {
+                  image:"a7.jpg", reactions:{
+                      likes:937, 
+                      
+                  }
+              },
+              {
+                  image:"a8.jpg", reactions:{
+                      likes:1000293, 
+                      
+                  }
+              }
+            ]
+
+          event.listen("showFeed", ()=>{
+           
+           event.removeListener("showFeed");
+
+           Inter.for({
+               in:"feed",
+               data:places,
+               do(f){
+
+               // The "this" keyword here indicates the reactor of
+               // the reactive listing in "feed" container.
+               // And we must protect it so that it can not be mutated.
+
+                   if(!storage.has("feedReactor")){
+
+                    storage.set("feedReactor", this);
+                    storage.protect("feedReactor");
+
+                   }
+                   if(!("isLiking" in f.reactions)){
+
+                    f.reactions.isDesliking=false;
+                    f.reactions.isLiking=false;
+
+                   }
+
+          return template({
+              elements:[{
+                  tag:"div", children:[{
+                      tag:"div", children:[{
+                          tag:"img", attrs:{
+
+                           src:`/images/${f.image}`
+
+                          }
+                      }]
+                  },{
+                      tag:"div", children:[{
+                          tag:"div", attrs:{
+                              class:"reactions"
+                          }, children:[{
+                              tag:"a",attrs:{
+                                class:f.reactions.isLiking ? "heart" : "no",
+                                
+                              },  events:{
+
+                                onclick(){
+
+                                    event.fire("react", f.reactions)
+                                }
+
+                              }, children:[{
+                                  tag:"i", attrs:{
+                               
+                                    class:"fas fa-heart"
+
+                                  }
+                              }]
+                          },{
+                                  tag:"span", text:f.reactions.likes, styles:{
+                                      paddingLeft:"5px"
+                                  }
+                                  
+                              },{
+                              tag:"a", attrs:{
+
+                                class:"no",
+                                href:"https://www.facebook.com/sharer/sharer.php?u=https://github.com/DenisPower1/inter",
+                                title:"Compartilhar"
+                               
+                              }, children:[{
+                                  tag:"i", attrs:{
+                                      class:"fas fa-share"
+                                  }
+                              }]
+                          }]
+                      }]
+                  }]
+              }]
+          })
+
+               }
+           })
+            
+
+          })
+
+           event.listen("changeFeed", (newFeed)=>{
+
+               storage.get("feedReactor", (reactor)=>{
+
+                reactor.otherArray=newFeed;
+
+               })
+
+
+
+           })
+
+           event.listen("react",(reactions)=>{
+
+            reactions.isLiking=!reactions.isLiking;
+
+            if(reactions.isLiking){
+
+                reactions.likes++;
+
+            }else{
+
+                reactions.likes--;
+
+            }
+
+           })
+
+           ROUTER({
+               routes:{
+
+                "/":()=>{
+
+                document.title="home";
+
+                    if(!pl.class){
+                    an.class=null;
+                    pl.class="heart";
+                
+                    if(event.hasListener("showFeed")){
+
+                       event.fire("showFeed");
+
+                    }else{
+                   event.fire("changeFeed", places);
+                  }
+                    
+                }
+                    
+                },
+
+                "/animais":()=>{
+
+                   document.title="Animais";                     
+
+                    if(!an.class){
+                    pl.class=null;
+                    an.class="heart"
+                
+                    event.fire("changeFeed", animals);
+                }
+                    
+
+                },
+
+                "*":()=>{
+
+                    url.setPath("/")
+
+                }
+
+               }
+           })
