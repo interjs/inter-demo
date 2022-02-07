@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/gh/DenisPower1/inter@1.2.11/inter.js"></script>
+    <script src="http://interjs.epizy.com//scripts/all.js"></script>
+    <link rel="stylesheet" href="http://interjs.epizy.com//style/all.css">
+    <meta charset="utf-8">
+    <title>An Inter's demo that display some memes.</title>
+    <link rel="shortcut icon" href="http://interjs.epizy.com/foto/Inter.png">
+    <style>
+
+
+  #memes{
+
+margin-left: 20%;
+  
+
+        }
+body{
+
+background-color: rgb(43, 39, 39);
+
+
+}
+
+html{
+
+scroll-behavior: smooth;
+
+}
+        #memes>div{
+
+              width: 60vw;
+              height: 80vh;
+              margin-top: 5%;
+                       box-shadow: 1px 1px 1px black; 
+                       background-color: white;    
+                       border-radius: 30px;        
+                       
+
+        }
+
+        img{
+            width: 100%;
+            height: 70vh;
+            
+        }
+
+        .interact{
+
+display: flex;
+margin-left: 10%;
+
+        }
+
+        .interact>*{
+
+margin-left: 3%;
+margin-top: 2%;
+
+        }
+
+    .interact>a{
+            font-size: 2rem;
+            color: rgb(102, 101, 101);
+            
+        }
+
+        a:hover{
+
+             cursor:pointer
+
+        }
+        p{
+            font-size: 1.4rem;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+
+            padding-left: 10%;
+            padding-top: 4%;
+        }
+
+        h1{
+            text-align: center;
+            padding-top: 25%;
+            color: white;
+
+        }
+
+        button{
+
+margin-left: 35%;
+width: 200px;
+height: 50px;
+margin-top: 5%;
+font-size: 1.2em;
+border-radius: 70px;
+border:none;
+box-shadow: 1px 1px 2px black;
+        }
+
+#none{
+
+  display: none;
+
+}
+
+    </style>
+</head>
+<body>
+
+    <div id="root">
+      <h1 id="wait">Aguarde...</h1>
+    <div id="memes"></div>
+      <button {...request}>{  requestMessage }</button>
+</div>
+
+    </body>
+
+<script>
+
+const conditions={
+
+    wait:true,
+    error:false,
+    createButton:false
+
+};
+
+function returnTemplate(text, container){
+
+    return template({
+
+        elements:[!container ? {
+            tag: "h1", text:text,
+        } : {
+            tag:"div", children:[{
+                tag:"h1", text:text.title
+            },{
+                tag:"p", text:text.moreInfo
+            }]
+        } ]
+
+    })
+
+}
+
+Inter.renderIf({
+    in:"root",
+    watch:conditions,
+    conditions:[{
+        index:0,
+        replace:true,
+        render(){
+
+            if(conditions.wait && !conditions.error){
+
+                return  returnTemplate("Aguarde...")
+
+            }if(conditions.error){
+
+                return returnTemplate(
+                   {title:"Houve um erro, tente recarregar a página!",
+                   moreInfo:"Se continuar a aparecer essa messagem, tente acessar esse demo mais tarde."
+            }, true)
+
+
+
+        }
+    }
+
+    }]
+})
+
+const url="http://angolameme.ao"
+const _default="dcdb5c55-84cd-4f46-8142-e917258b32be"
+const Token=localStorage.getItem("token");
+let memeReactor;
+let useDefault=true;
+let page=0;
+let isRequesting=false;
+
+const reator=toHTML({
+    in:"root",
+    data:{
+        requestMessage:"Ver mais",
+        
+    },
+    private:true
+})
+
+const {request}=toATTR({
+    in:"root",
+    data:{
+        request:{
+            disabled:null,
+            id:"none",
+            title:"Clica para ver mais memes",
+            onclick(){
+
+                this.disabled=true;
+                this.title="Buscando, aguarde!";
+                reator.requestMessage="Buscando...";
+                event.fire("getMemes");
+
+            }
+            
+
+        }
+    },
+    private:true
+})
+
+
+
+event.listen("generateToken", ()=>{
+          
+    event.removeListener("generateToken");
+
+     backend.request({
+         type:"post",
+         path:`${url}/auth/validarToken`,
+         body:JSON.stringify({
+             token:null,
+         }),
+         
+     }).okay((r)=>{
+
+        console.log(r)
+        
+
+         storage.set("token", r.objecto);
+         storage.protect("token");
+         localStorage.setItem("token", r.objecto);
+
+         event.fire("getMemes");
+
+     })
+
+})
+
+
+
+event.listen("getMemes", (r)=>{
+
+    if(!isRequesting){
+
+    let token;
+
+    if(storage.has("token")){
+
+   storage.get("token", t=>token=t);
+    
+}
+
+   page++;
+
+  isRequesting=true
+
+   backend.request({
+       type:"get",
+       path:`${url}/Meme/GetMemes?filtro=&&pagina=${page}&take=10`,
+       headers:{
+           Secret:useDefault ? _default : token
+       }
+   }).response((obj)=>{
+  
+       console.log(obj)
+
+       isRequesting=false;
+
+        if(conditions.wait){
+
+            conditions.wait=false;
+            
+            
+
+        }
+
+
+        request.disabled=null;
+        request.title="Clica para ver mais memes";
+        reator.requestMessage="Ver mais"
+        
+
+    event.fire("listMemes", obj.objecto.items);
+
+
+   }, function(){
+
+    isRequesting=false;
+
+       if(this.status==401 && !useDefault){
+
+        useDefault=false;
+
+        event.fire("generateToken");
+
+       }
+
+    else{
+
+        if(conditions.wait){
+        
+            conditions.wait=false;
+
+            if(!request.id){
+
+                request.id="none";
+
+            }
+
+        
+        }
+      
+
+      conditions.error=true;
+    }
+
+   })
+
+}
+
+
+})
+
+
+event.listen("listMemes", (memes)=>{
+
+    if(request.id=="none"){
+
+        request.id=null;
+
+    }
+
+    window.scrollTo(null,null, 0)
+
+if(!Array.isArray(memeReactor)){
+
+  Inter.for({
+      in:"memes",
+      data:memes,
+      do(meme){
+
+        memeReactor=this;
+
+        return template({
+
+               elements:[{
+                   tag:"div", children:[{
+
+                       tag:"div", children:[{
+
+                           tag:"img", attrs:{src:meme.url}
+                       }]
+                   },{
+                    tag:"div", attrs:{class:"interact"}, children:[{
+
+                       tag:"a", attrs:{href:"https://github.com/interjs/inter", title:"Inter - O framework Javascript simples!"}, children:[{
+                           tag:"i", attrs:{class:"fab fa-github"}
+                       }]
+                   }]
+                
+                }]
+
+               }]
+
+        })
+
+      }
+  })
+
+}else{
+
+  memeReactor.otherArray=memes;
+
+}
+
+})
+
+event.fire("getMemes");
+
+app.status="production"
+
+
+</script>
+
+
+
+</html>
